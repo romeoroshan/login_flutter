@@ -15,12 +15,12 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.LOGGIN,
-      page: () => const LogginView(),
+      page: () => LogginView(),
       binding: LogginBinding(),
     ),
     GetPage(
       name: _Paths.REGISTER,
-      page: () => const RegisterView(),
+      page: () => RegisterView(),
       binding: RegisterBinding(),
     ),
   ];

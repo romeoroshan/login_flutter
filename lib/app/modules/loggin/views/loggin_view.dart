@@ -1,13 +1,38 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:login/app/modules/loggin/views/home_view.dart';
 import 'package:login/app/modules/register/views/register_view.dart';
+import 'package:login/app/user_detail.dart';
 
 import '../controllers/loggin_controller.dart';
 
 class LogginView extends GetView<LogginController> {
-  const LogginView({Key? key}) : super(key: key);
+  final TextEditingController emailcon=TextEditingController();
+  final TextEditingController passwordcon=TextEditingController();
+  LogginView({Key? key}) : super(key: key);
   @override
+  void getUserData(){
+    GetStorage box=GetStorage();
+    Map<String, dynamic>? userData=box.read('user');
+    print(userData);
+    if(userData!=null){
+      User user=User.fromJson(userData);
+      print(user.username);
+      if(user.email==emailcon.text && user.password==passwordcon.text){
+        Get.to(HomeView(name: user.username,));
+      }
+      else{
+        print("Invalid User");
+      }
+    }
+    else{
+      print("no user found");
+    }
+  }
   Widget build(BuildContext context) {
     double sWidth = MediaQuery.of(context).size.width;
 
@@ -55,6 +80,7 @@ class LogginView extends GetView<LogginController> {
                         height: 5,
                       ),
                       TextField(
+                        controller: emailcon,
                         decoration: InputDecoration(
                           
                           hintText: "Email",
@@ -93,6 +119,8 @@ class LogginView extends GetView<LogginController> {
                         height: 5,
                       ),
                       TextField(
+                        controller: passwordcon,
+
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
@@ -139,7 +167,9 @@ class LogginView extends GetView<LogginController> {
                       gradient:
                           const LinearGradient(colors: [Colors.red, Colors.black])),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      getUserData();
+                    },
                     
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -209,7 +239,7 @@ class LogginView extends GetView<LogginController> {
                     const Text("Don't have an account? ",style: TextStyle(color: Colors.grey),),
                     InkWell(
                       onTap: () {
-                        Get.to(const RegisterView());
+                        Get.to(RegisterView());
                       },
                       child: const Text("Sign-up",style: TextStyle(color: Colors.blue),),
                     )

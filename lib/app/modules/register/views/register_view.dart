@@ -1,13 +1,24 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:login/app/modules/loggin/views/loggin_view.dart';
+import 'package:login/app/user_detail.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  const RegisterView({Key? key}) : super(key: key);
+  final TextEditingController emailcon=TextEditingController();
+  final TextEditingController usernamecon=TextEditingController();
+  final TextEditingController passwordcon=TextEditingController();
+  RegisterView({Key? key}) : super(key: key);
   @override
+  void registerUser(User user){
+    GetStorage box=GetStorage();
+    box.write('user',user.toJson());
+  }
   Widget build(BuildContext context) {
     double sWidth=MediaQuery.of(context).size.width;
     return Scaffold(
@@ -54,6 +65,7 @@ class RegisterView extends GetView<RegisterController> {
                         height: 5,
                       ),
                       TextField(
+                        controller: usernamecon,
                         decoration: InputDecoration(
                           
                           hintText: "Username",
@@ -91,6 +103,7 @@ class RegisterView extends GetView<RegisterController> {
                         height: 5,
                       ),
                       TextField(
+                        controller: emailcon,
                         decoration: InputDecoration(
                           
                           hintText: "Email",
@@ -129,6 +142,7 @@ class RegisterView extends GetView<RegisterController> {
                         height: 5,
                       ),
                       TextField(
+                        controller: passwordcon,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
@@ -161,7 +175,15 @@ class RegisterView extends GetView<RegisterController> {
                       gradient:
                           const LinearGradient(colors: [Colors.red, Colors.black])),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String usern=usernamecon.text;
+                      String pass=passwordcon.text;
+                      String em=emailcon.text;
+                      User user=User(username: usern, password: pass, email: em);
+                      registerUser(user);
+                      Get.to(LogginView());
+                      
+                    },
                     
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -184,7 +206,7 @@ class RegisterView extends GetView<RegisterController> {
                     const Text("Already have an account? ",style: TextStyle(color: Colors.grey),),
                     InkWell(
                       onTap: () {
-                        Get.to(const LogginView());
+                        Get.to(LogginView());
                       },
                       child: const Text("Login",style: TextStyle(color: Colors.blue),),
                     )
