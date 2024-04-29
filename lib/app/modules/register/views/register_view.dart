@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:login/app/modules/register/views/register_view.dart';
+import 'package:login/app/modules/loggin/views/loggin_view.dart';
 
-import '../controllers/loggin_controller.dart';
+import '../controllers/register_controller.dart';
 
-class LogginView extends GetView<LogginController> {
-  const LogginView({Key? key}) : super(key: key);
+class RegisterView extends GetView<RegisterController> {
+  const RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double sWidth = MediaQuery.of(context).size.width;
-
+    double sWidth=MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -30,7 +29,7 @@ class LogginView extends GetView<LogginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Login",
+                  "Register",
                   style: TextStyle(
                       fontSize: sWidth * 0.11,
                       fontWeight: FontWeight.bold,
@@ -39,6 +38,43 @@ class LogginView extends GetView<LogginController> {
                 const SizedBox(
                   height: 30,
                 ),
+                SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Username",
+                        style: TextStyle(
+                            fontSize: sWidth * 0.06,
+                            fontWeight: FontWeight.w600,
+                            
+                            color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          
+                          hintText: "Username",
+                          hintStyle: const TextStyle(
+                              color: Color.fromARGB(255, 200, 199, 199)),
+                          border: OutlineInputBorder(
+                            
+                            borderSide:
+                                const BorderSide(width: 0, color: Colors.red),
+                            borderRadius: BorderRadius.circular(10),
+                            
+                          ),
+                          focusColor: Colors.red,
+                          fillColor: const Color.fromARGB(127, 158, 158, 158),
+                          filled: true,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20,),
                 SizedBox(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,21 +149,7 @@ class LogginView extends GetView<LogginController> {
                 const SizedBox(
                   height: 10,
                 ),
-                ListTile(
-                  leading: const Checkbox(
-                    value: true,
-                    onChanged: null,
-                  ),
-                  title: const Text(
-                    "Remember me",
-                    style: TextStyle(color: Colors.white60),
-                  ),
-                  trailing: Text(
-                    "Forgot password",
-                    style: TextStyle(
-                        color: Colors.white60, fontSize: sWidth * 0.03),
-                  ),
-                ),
+                
                 const SizedBox(
                   height: 40,
                 ),
@@ -146,7 +168,7 @@ class LogginView extends GetView<LogginController> {
                             borderRadius: BorderRadius.circular(5)),
                         backgroundColor: Colors.transparent),
                         child: const Text(
-                      "Login",
+                      "Register",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
@@ -154,64 +176,17 @@ class LogginView extends GetView<LogginController> {
                 const SizedBox(
                   height: 30,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: sWidth * 0.3,
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-                    const Text(
-                      "Or login with",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Container(
-                      width: sWidth * 0.3,
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: sWidth * .2,
-                      height: 50,
-                      
-                      decoration: BoxDecoration(borderRadius: BorderRadiusDirectional.circular(8),color: Colors.grey,),
-                      child: const Icon(Icons.apple),
-                    ),
-                    Container(
-                      width: sWidth * .2,
-                      height: 50,
-                      
-                      decoration: BoxDecoration(borderRadius: BorderRadiusDirectional.circular(8),color: Colors.grey,),
-                      child: const Icon(Icons.android_rounded),
-                    ),
-                    Container(
-                      width: sWidth * .2,
-                      height: 50,
-                      
-                      decoration: BoxDecoration(borderRadius: BorderRadiusDirectional.circular(8),color: Colors.grey,),
-                      child: const Icon(Icons.ac_unit),
-                    ),
-                  ],
-                ),
+                
                 const SizedBox(height: 50,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account? ",style: TextStyle(color: Colors.grey),),
+                    const Text("Already have an account? ",style: TextStyle(color: Colors.grey),),
                     InkWell(
                       onTap: () {
-                        Get.to(const RegisterView());
+                        Get.to(const LogginView());
                       },
-                      child: const Text("Sign-up",style: TextStyle(color: Colors.blue),),
+                      child: const Text("Login",style: TextStyle(color: Colors.blue),),
                     )
                   ],
                 )
