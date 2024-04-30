@@ -9,71 +9,8 @@ import 'package:login/app/user_detail.dart';
 import '../controllers/loggin_controller.dart';
 
 class LogginView extends GetView<LogginController> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  LogginController controllerr=LogginController();
 
-  final emailError = RxString('');
-  final passwordError = RxString('');
-  final buttonDisabled = true.obs;
-
-  void validateEmail(String value) {
-    if (value.isEmpty) {
-      emailError.value = 'Email cannot be empty';
-    } else if (!GetUtils.isEmail(value)) {
-      emailError.value = 'Invalid email address';
-    } else {
-      emailError.value = '';
-    }
-    updateButtonState();
-  }
-
-  void validatePassword(String value) {
-    if (value.isEmpty) {
-      passwordError.value = 'Password cannot be empty';
-    } else if (value.length < 8) {
-      passwordError.value = 'Password must be at least 8 characters long';
-    } else if (!isStrongPassword(value)) {
-      passwordError.value =
-          'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
-    } else {
-      passwordError.value = '';
-    }
-    updateButtonState();
-  }
-
-  void updateButtonState() {
-    buttonDisabled.value = emailError.isNotEmpty || passwordError.isNotEmpty;
-    print(buttonDisabled.value);
-  }
-
-  bool isStrongPassword(String password) {
-    final regex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*])');
-    return regex.hasMatch(password);
-  }
-
-  void getUserData() {
-    final box = GetStorage();
-    final userData = box.read('user');
-    print(userData);
-    if (userData != null) {
-      final user = User.fromJson(userData);
-      if (user.email == emailController.text &&
-          user.password == passwordController.text) {
-        Get.to(HomeView(name: user.username));
-      } else {
-        Get.snackbar(
-                              'Error',
-                              'Invalid User',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white,
-                            );
-      }
-    } else {
-      print("no user found");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +59,8 @@ class LogginView extends GetView<LogginController> {
                         height: 5,
                       ),
                       TextField(
-                        controller: emailController,
-                        onChanged: validateEmail,
+                        controller: controllerr.emailController,
+                        onChanged: controllerr.validateEmail,
                         decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: const TextStyle(
@@ -138,7 +75,7 @@ class LogginView extends GetView<LogginController> {
                           filled: true,
                         ),
                       ),
-                      Obx(() => Text(emailError.value,
+                      Obx(() => Text(controllerr.emailError.value,
                           style: TextStyle(color: Colors.red))),
                     ],
                   ),
@@ -161,8 +98,8 @@ class LogginView extends GetView<LogginController> {
                         height: 5,
                       ),
                       TextField(
-                        controller: passwordController,
-                        onChanged: validatePassword,
+                        controller: controllerr.passwordController,
+                        onChanged: controllerr.validatePassword,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
@@ -177,7 +114,7 @@ class LogginView extends GetView<LogginController> {
                           filled: true,
                         ),
                       ),
-                      Obx(() => Text(passwordError.value,
+                      Obx(() => Text(controllerr.passwordError.value,
                           style: TextStyle(color: Colors.red))),
                     ],
                   ),
@@ -211,13 +148,7 @@ class LogginView extends GetView<LogginController> {
                       gradient: const LinearGradient(
                           colors: [Colors.red, Colors.black])),
                   child: ElevatedButton(
-                    onPressed: buttonDisabled.value
-                        ? () {
-                            getUserData();
-                          }
-                        : () {
-                            null;
-                          },
+                    onPressed: controllerr.getUserData,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
