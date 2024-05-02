@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/app/modules/loggin/views/loggin_view.dart';
-import 'package:login/app/user_detail.dart';
-import 'package:get_storage/get_storage.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {

@@ -1,11 +1,10 @@
-// ignore_for_file: override_on_non_overriding_member
+// ignore_for_file: override_on_non_overriding_member, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:login/app/modules/loggin/views/home_view.dart';
+
 import 'package:login/app/modules/register/views/register_view.dart';
-import 'package:login/app/user_detail.dart';
+
 import '../controllers/loggin_controller.dart';
 
 class LogginView extends GetView<LogginController> {
